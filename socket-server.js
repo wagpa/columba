@@ -16,6 +16,12 @@ export function injectSocket(server) {
 
     // add socket.io debug handler
     io.on('connection', (socket) => {
+        const room = socket.handshake.headers.room ?? "default"
+        console.log('user connected', socket.id, room);
+
+        // join room
+        socket.join(room)
+
         // create new user
         const user = {
             id: Date.now(),
@@ -25,7 +31,6 @@ export function injectSocket(server) {
         users[user.id] = user
 
         // notify about user join
-        console.log('user connected', socket.id);
         socket.emit("self", { userId: user.id, user: user, users: users })
         io.emit("join", { userId: user.id, user: user })
 
