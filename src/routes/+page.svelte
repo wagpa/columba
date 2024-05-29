@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { io } from "socket.io-client"
+    import IconTrashCan from 'virtual:icons/carbon/trash-can'
 
     interface User {
         id: number,
@@ -14,6 +15,7 @@
     // handle users and self
     let users: Record<number, User> = {}
     let self: User | null = null
+    let admin = false
     // publish self updates
     $: { if (self) socket.emit("update", self) }
 
@@ -38,15 +40,43 @@
     })
 </script>
 
-<div>
-    <pre>{ JSON.stringify(self ?? "{}", null, 2) }</pre>
-    {#if (self)}
-        <input bind:value={self.name}>
-        <input bind:value={self.message}>
-    {/if}
-    <div>
-        {#each Object.entries(users) as [userId, user]}
-            <pre>{ JSON.stringify(user, null, 2) }</pre>
-        {/each}
+<div class="h-screen w-screen flex flex-col bg-gradient-to-br from-slate-700 to-70% to-slate-600">
+    <div class="flex flex-col m-5 h-full md:max-w-90">
+        <div class="flex flex-row ml-auto mb-6">
+            <label>
+                <span>Alle sehen</span>
+                <input type="checkbox" bind:checked={admin}>
+            </label>
+        </div>
+
+        <div id="self" class="flex flex-col justify-center">
+            {#if (self)}
+                <div class="flex flex-col m-2">
+                    <div class="flex flex-row mb-2">
+                        <input type="text" maxlength="20" bind:value={self.name} pattern="[a-zA-Z0-9]+" class="text-white bg-inherit w-min">
+                        <button class="text-white ml-auto p-1 rounded hover:text-neutral-300" title="Text löschen" on:click={() => self.message = ""}><IconTrashCan /></button>
+                    </div>
+                    <textarea bind:value={self.message} rows="5" class="bg-white p-2 rounded"/>
+                </div>
+            {/if}
+        </div>
+
+        <div id="others" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-auto">
+            {#each Object.entries(users) as [userId, user]}
+                {@const isSelf = (userId == self.id)}
+                {#if (!isSelf)}
+                    <div class="flex flex-col m-2">
+                        <div class="flex flex-row mb-2">
+                            <span class="text-white">{user.name}</span>
+                        </div>
+                        {#if (admin)}
+                            <div class="bg-white p-2 rounded break-all">{user.message || "Text Eingeben"}</div>
+                        {:else}
+                            <div class="bg-slate-900 p-2 rounded break-all">...</div>
+                        {/if}
+                    </div>
+                {/if}
+            {/each}
+        </div>
     </div>
 </div>

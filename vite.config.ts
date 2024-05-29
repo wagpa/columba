@@ -1,6 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import {socketDevServer} from "./socket-server";
+import Icons from 'unplugin-icons/vite'
+import { socketDevServer } from "./socket-server";
 
 export default defineConfig({
 	server: {
@@ -9,5 +10,11 @@ export default defineConfig({
 	preview: {
 		port: 3000,
 	},
-	plugins: [sveltekit(), socketDevServer],
+	plugins: [
+		sveltekit(),
+		Icons({
+			compiler: 'svelte',
+		}),
+		socketDevServer,
+	],
 });

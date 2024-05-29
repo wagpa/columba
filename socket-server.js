@@ -1,4 +1,3 @@
-// TODO start devserver: https://dev.to/theether0/sveltekit-with-socketio-and-nodejs-285h
 import {Server} from "socket.io";
 
 export const socketDevServer = {
