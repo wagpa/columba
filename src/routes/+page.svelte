@@ -70,7 +70,7 @@
                             <div class="flex flex-row mb-2">
                                 <span class="text-white">{user.name}</span>
                             </div>
-                            <div class="bg-white p-2 rounded break-all">{user.message || "Text Eingeben"}</div>
+                            <textarea bind:value={user.message} disabled={true} class="bg-white p-2 rounded"/>
                         </div>
                     {/if}
                 {/each}

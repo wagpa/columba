@@ -1,8 +1,6 @@
 const adjectives = [
     "Großer",
     "Kleiner",
-    "Langer",
-    "Kurzer",
     "Roter",
     "Blauer",
     "Grüner",
