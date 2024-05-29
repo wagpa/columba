@@ -1,4 +1,5 @@
 import {Server} from "socket.io";
+import {name} from "./names.js";
 
 export const socketDevServer = {
     name: 'socket-server',
@@ -18,7 +19,7 @@ export function injectSocket(server) {
         // create new user
         const user = {
             id: Date.now(),
-            name: "Unbekannter",
+            name: name(),
             message: "",
         }
         users[user.id] = user
