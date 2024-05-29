@@ -15,7 +15,7 @@
     // handle users and self
     let users: Record<number, User> = {}
     let self: User | null = null
-    let admin = false
+    let show = false
     // publish self updates
     $: { if (self) socket.emit("update", self) }
 
@@ -43,9 +43,9 @@
 <div class="h-screen w-screen flex flex-col bg-gradient-to-br from-slate-700 to-70% to-slate-600">
     <div class="flex flex-col m-5 h-full md:max-w-90">
         <div class="flex flex-row ml-auto mb-6">
-            <label>
-                <span>Alle sehen</span>
-                <input type="checkbox" bind:checked={admin}>
+            <label class="flex flex-row gap-2 justify-center">
+                <span class="text-white">Aufdecken</span>
+                <input type="checkbox" bind:checked={show}>
             </label>
         </div>
 
@@ -61,22 +61,20 @@
             {/if}
         </div>
 
-        <div id="others" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-auto">
-            {#each Object.entries(users) as [userId, user]}
-                {@const isSelf = (userId == self.id)}
-                {#if (!isSelf)}
-                    <div class="flex flex-col m-2">
-                        <div class="flex flex-row mb-2">
-                            <span class="text-white">{user.name}</span>
-                        </div>
-                        {#if (admin)}
+        {#if (show)}
+            <div id="others" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-auto">
+                {#each Object.entries(users) as [userId, user]}
+                    {@const isSelf = (userId == self.id)}
+                    {#if (!isSelf)}
+                        <div class="flex flex-col m-2">
+                            <div class="flex flex-row mb-2">
+                                <span class="text-white">{user.name}</span>
+                            </div>
                             <div class="bg-white p-2 rounded break-all">{user.message || "Text Eingeben"}</div>
-                        {:else}
-                            <div class="bg-slate-900 p-2 rounded break-all">...</div>
-                        {/if}
-                    </div>
-                {/if}
-            {/each}
-        </div>
+                        </div>
+                    {/if}
+                {/each}
+            </div>
+        {/if}
     </div>
 </div>
