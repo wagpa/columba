@@ -17,7 +17,7 @@ const names = [
     "Eifriger Pinguin",
     "Springendes Känguru",
     "Gemütlicher Panda",
-    "Hohes Giraffe",
+    "Hohe Giraffe",
     "Kräftiges Nashorn",
     "Gestreiftes Zebra",
     "Schlauer Fuchs",
