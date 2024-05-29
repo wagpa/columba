@@ -48,7 +48,7 @@
 </script>
 
 <div class="h-screen w-screen flex flex-col bg-gradient-to-br from-slate-700 to-70% to-slate-600">
-    <div class="flex flex-col m-5 h-full md:max-w-90">
+    <div class="flex flex-col m-5 h-full">
         <div class="flex flex-row ml-auto mb-6">
             <label class="flex flex-row gap-2 justify-center">
                 <span class="text-white">Aufdecken</span>
@@ -56,9 +56,9 @@
             </label>
         </div>
 
-        <div id="self" class="flex flex-col justify-center">
+        <div id="self" class="flex flex-col justify-center items-center">
             {#if (self)}
-                <div class="flex flex-col m-2">
+                <div class="flex flex-col m-2 w-full md:w-[80%] lg:w-[60%] mx-w-[100em]">
                     <div class="flex flex-row mb-2">
                         <input type="text" maxlength="20" bind:value={self.name} pattern="[a-zA-Z0-9]+" class="text-white bg-inherit w-min">
                         <button class="text-white ml-auto p-1 rounded hover:text-neutral-300" title="Text löschen" on:click={() => self.message = ""}><IconTrashCan /></button>
